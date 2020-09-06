@@ -22,14 +22,11 @@ export default class App extends React.Component {
     const res = await fetch(url);
     const data = await res.json();
     this.setState({ rockets: data, loading: false });
-    console.log(this.state.rockets);
   };
 
   getLaunchYearAndSuccess = (state) => {
-    console.log(state);
     const filterRockets = this.state.rockets.filter(e => e.launch_year == state.launchYear && e.launch_success == state.launchSuccess );
     this.setState({filterRockets: filterRockets});
-    console.log(filterRockets);
   }
 
 
@@ -39,20 +36,13 @@ export default class App extends React.Component {
     console.log(this.state.filterRockets);
   }
 
-  updateFilterParams = (val, key) => {
-    console.log(this.state);
+  updateFilterParams = async (val, key) => {
     if(key == "year") {
-      this.setState((prevState, props) => ({
-        launchYear: val
-      }));
+      await this.setState({launchYear: val})
     }
     if(key == "status") {
-      this.setState((prevState, props) => ({
-        launchSuccess: val
-      }));
+      await this.setState({launchSuccess: val});
     }
-    console.log(val);
-    console.log(this.state);
     this.getLaunchYearAndSuccess(this.state);
   }
 

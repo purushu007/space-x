@@ -34,7 +34,7 @@ export default class FilterList extends React.Component {
         <div>
           <p><u>Successful Landing</u></p>
           <Button variant="success m-1" onClick={() => this.props.getLand(true, "landingstatus")}> True </Button>
-          <Button variant="success m-1" onClick={() => this.props.getLand(true, "landingstatus")}> False </Button>
+          <Button variant="success m-1" onClick={() => this.props.getLand(false, "landingstatus")}> False </Button>
         </div>
       </React.Fragment>
     )
