@@ -4,6 +4,7 @@ import FilterList from './Components/Filters/FilterList';
 import { Container, Col, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const landExists = (land_success, flag) => land_success.some((el) => el.land_success === flag)
 export default class App extends React.Component {
   state = {
     loading: true,
@@ -11,6 +12,9 @@ export default class App extends React.Component {
     filterYear: null,
     filterLaunch: null,
     filterLand: null,
+    launchYear: 0,
+    launchSuccess: true,
+    filterRockets: [],
   };
 
   async componentDidMount() {
@@ -18,14 +22,47 @@ export default class App extends React.Component {
     const res = await fetch(url);
     const data = await res.json();
     this.setState({ rockets: data, loading: false });
+    console.log(this.state.rockets);
   };
+
+  getLaunchYearAndSuccess = (state) => {
+    console.log(state);
+    const filterRockets = this.state.rockets.filter(e => e.launch_year == state.launchYear && e.launch_success == state.launchSuccess );
+    this.setState({filterRockets: filterRockets});
+    console.log(filterRockets);
+  }
+
+
+  getSuccessLanding = (val) => {
+    const successLanding = this.state.filterRockets.filter(e => landExists(e.rocket.first_stage.cores, val));
+    this.setState({filterRockets: successLanding});
+    console.log(this.state.filterRockets);
+  }
+
+  updateFilterParams = (val, key) => {
+    console.log(this.state);
+    if(key == "year") {
+      this.setState((prevState, props) => ({
+        launchYear: val
+      }));
+    }
+    if(key == "status") {
+      this.setState((prevState, props) => ({
+        launchSuccess: val
+      }));
+    }
+    console.log(val);
+    console.log(this.state);
+    this.getLaunchYearAndSuccess(this.state);
+  }
+
 
   getYear = (val) => {
     this.setState({loading: true});
     this.state.filterYear = val.target.value;
     const Yearfilter = this.state.rockets.filter(rocket => rocket.launch_year === this.state.filterYear);
     this.setState({ rockets: Yearfilter, loading: false });
-  };
+  }
 
   getLaunch = (val) => {
     this.setState({loading: true});
@@ -33,7 +70,7 @@ export default class App extends React.Component {
     console.log(true === this.state.filterLaunch);
     const Launchfilter = this.state.rockets.filter(rocket => String(rocket.launch_success) === String(this.state.filterLaunch));
     this.setState({ rockets: Launchfilter, loading: false });
-  };
+  }
 
   getLand = (val) => {
     this.setState({loading: true});
@@ -52,12 +89,12 @@ export default class App extends React.Component {
             <Row className="justify-content-center">
               <Col xs={8} md={2}>
                 <Container fluid style={{backgroundColor: '#fff'}} className="text-center rounded">
-                  <FilterList getYear={this.getYear} getLaunch={this.getLaunch} getLand={this.getLand}/>
+                  <FilterList getYear={this.updateFilterParams} getLaunch={this.updateFilterParams} getLand={this.getSuccessLanding}/>
                 </Container>
               </Col>
               <Col xs={9} md={10}>
                 <Container fluid>
-                  <RocketList rockets={this.state.rockets} loading={this.state.loading}/>
+                  <RocketList rockets={(this.state.launchYear == 0) ? this.state.rockets : this.state.filterRockets} loading={this.state.loading}/>
                 </Container>
               </Col>
             </Row>
