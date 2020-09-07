@@ -6,7 +6,7 @@ export default class RocketList extends React.Component {
     return(
       <React.Fragment>
         {this.props.loading ? (
-          <div>Loading...</div>
+          <div className="results-loading">Loading...</div>
           ) : (
             <div>
               {this.props.rockets != 0 ? (
@@ -34,7 +34,7 @@ export default class RocketList extends React.Component {
                   )}
                 </Row>
               ) : (
-                <div>Selected filters are not sufficient to show details...(select Launch details along with Year)</div>
+                <div className="results-loading">No Information Available</div>
                 )
               }
             </div>

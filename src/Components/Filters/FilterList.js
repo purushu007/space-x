@@ -6,8 +6,8 @@ export default class FilterList extends React.Component {
     return(
       <React.Fragment>
         <p className="text-left font-weight-bold">Filters</p>
-        <div>
-          <p><u>Launch Year</u></p>
+        <div className="filters">
+          <p className="filter-heading">Launch Year</p>
           <div>
             <Button variant="success m-1" onClick={() => this.props.getYear(2006, "year")}>2006</Button>
             <Button variant="success m-1" onClick={() => this.props.getYear(2007, "year")}>2007</Button>
@@ -26,13 +26,13 @@ export default class FilterList extends React.Component {
             <Button variant="success m-1" onClick={() => this.props.getYear(2020, "year")}>2020</Button>
           </div>
         </div>
-        <div>
-          <p><u>Successful Launch</u></p>
+        <div className="filters">
+          <p className="filter-heading">Successful Launch</p>
           <Button variant="success m-1" onClick={() => this.props.getLaunch(true, "status")}> True </Button>
           <Button variant="success m-1" onClick={() => this.props.getLaunch(false, "status")}> False </Button>
         </div>
-        <div>
-          <p><u>Successful Landing</u></p>
+        <div className="filters">
+          <p className="filter-heading">Successful Landing</p>
           <Button variant="success m-1" onClick={() => this.props.getLand(true, "landingstatus")}> True </Button>
           <Button variant="success m-1" onClick={() => this.props.getLand(false, "landingstatus")}> False </Button>
         </div>

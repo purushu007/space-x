@@ -15,13 +15,47 @@ code {
 .rocket-card {
   width: calc(100%/4);
 }
+.filter-heading:after {
+  content: '';
+  display: block;
+  border-bottom: 2px solid lightgray;
+  width: 80%;
+  margin: 0 auto;
+}
+.results-loading {
+  text-align: center;
+  margin-top: 30%;
+}
 @media only screen and (max-width: 1024px) {
   .rocket-card {
     width: calc(100%/2);
   }
+  .filter-section {
+    max-width: 25% !important;
+    flex: 0 0 25% !important;
+  }
+  .rockets-section {
+    max-width: 70% !important;
+  }
 }
-@media only screen and (max-width: 770px) {
+@media only screen and (max-width: 890px) {
+  .filter-section {
+    max-width: 30% !important;
+    flex: 0 0 30% !important;
+  }
+}
+@media only screen and (max-width: 699px) {
   .rocket-card {
     width: 100%;
+  }
+  .filter-section {
+    max-width: 100% !important;
+  }
+  .rockets-section {
+    max-width: 100% !important;
+  }
+  .filters {
+    margin: 0 auto;
+    width: 30%;
   }
 }
